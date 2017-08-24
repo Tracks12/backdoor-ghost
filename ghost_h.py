@@ -70,9 +70,7 @@ def pic():
 """ Program en entier """
 def normal():
 	print("Program run [" + color.B_GREEN + "normal mod" + color.END + "]\n")
-	a = 1
-	
-	while(a == 1):
+	while(1):
 		OS = int(input("Choisissez votre systeme: {1. " + color.B_BLUE + "linux" + color.END + " |2. " + color.B_BLUE + "windows" + color.END + " |0. " + color.B_RED + "exit" + color.END + "}\n" + color.B_YELLOW + ">>> " + color.END))
 		
 		if(OS == 1 or OS == 2):
@@ -95,12 +93,15 @@ def normal():
 				lecteur = raw_input("Choisissez un lecteur: {" + color.B_BLUE + "A" + color.END + " |" + color.B_BLUE + "B" + color.END + " |" + color.B_BLUE +"C" + color.END + " |" + color.B_BLUE + "..." + color.END + " |" + color.B_BLUE + "tous" + color.END + "}\n" + color.B_YELLOW + ">>> " + color.END)
 				
 				if(lecteur in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
-					files = 'tree /a /f ' + lecteur + ':\\ > ' + save + "-" + lecteur + '.txt'
+					output = save + "-" + lecteur + '.txt'
+					files = 'tree /a /f ' + lecteur + ':\\ > ' + output
 					
 					print("\n" + color.B_YELLOW + "> " + color.END + "Command[" + color.B_BLUE + system + color.END + "]: " + color.YELLOW + files + color.END)
 					print(color.YELLOW + "Loading..." + color.END)
 					
+					os.system('md ' + save)
 					os.system(files)
+					os.system('move ' + output + ' ' + save)
 					print(color.B_GREEN + "Successfull Scan on [" + save + "].\n" + color.END)
 				
 				elif(lecteur == "tous"):
@@ -165,11 +166,11 @@ def normal():
 					
 					print("\n" + color.B_GREEN + "Successfull Scan on [" + save + "].\n" + color.END)
 			
-			a = 0
+			break
 		
 		elif(OS == 0):
 			print(color.RED + "Quitting...\n" + color.END)
-			exit(1)
+			break
 		
 		else: print("[" + color.RED + "ERROR" + color.END + "] - Sorry this os isn't include on program...\n")
 
@@ -177,9 +178,7 @@ def normal():
 	
 	if(answer == 1):
 		disk = raw_input("Disque: ")
-		
 		save = save + "/" + save + "-" + disk + '.txt'
-		
 		chaine = raw_input("Tapez une chaine a rechercher: ")
 		print("\n")
 		save = open(save)
@@ -216,12 +215,15 @@ def make_tree():
 			lecteur = raw_input("Choisissez un lecteur: {" + color.B_BLUE + "A" + color.END + " |" + color.B_BLUE + "B" + color.END + " |" + color.B_BLUE +"C" + color.END + " |" + color.B_BLUE + "..." + color.END + " |" + color.B_BLUE + "tous" + color.END + "}\n" + color.B_YELLOW + ">>> " + color.END)
 			
 			if(lecteur in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
-				files = 'tree /a /f ' + lecteur + ':\\ > ' + save + "-" + lecteur + '.txt'
+				output = save + "-" + lecteur + '.txt'
+				files = 'tree /a /f ' + lecteur + ':\\ > ' + output
 				
 				print("\n" + color.B_YELLOW + "> " + color.END + "Command[" + color.B_BLUE + system + color.END + "]: " + color.YELLOW + files + color.END)
 				print(color.YELLOW + "Loading..." + color.END)
 				
+				os.system('md ' + save)
 				os.system(files)
+				os.system('move ' + output + ' ' + save)
 				print(color.B_GREEN + "Successfull Scan on [" + save + "].\n" + color.END)
 			
 			elif(lecteur == "tous"):
@@ -285,8 +287,6 @@ def make_tree():
 				os.system('move ' + save + '-Z.txt ' + save)
 				
 				print("\n" + color.B_GREEN + "Successfull Scan on [" + save + "].\n" + color.END)
-		
-		a = 0
 	
 	elif(OS == 0):
 		print(color.RED + "Quitting...\n" + color.END)
@@ -301,10 +301,7 @@ def scan_tree():
 	print(color.B_GREEN + "./" + color.END)
 	
 	for file in files: print(color.B_GREEN + "+--> " + file + color.END)
-	
-	c = 1
-	
-	while(c == 1):
+	while(1):
 		save = raw_input("\nNom du fichier: ")
 		disk = raw_input("[" + color.B_BLUE + "null for Linux" + color.END + "]Disque: ")
 		
@@ -319,7 +316,7 @@ def scan_tree():
 			if(chaine in line): print(color.B_YELLOW + "> " + color.END + "Result: " + color.B_GREEN + line + color.END)
 		
 		save.close()
-		c = 0
+		break
 
 """ Le backdoor que t'as créer et que j'ai insérer """
 def connect_backdoor():

