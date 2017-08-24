@@ -11,6 +11,8 @@ from os.path import *
 from socket import *
 import os, sys, socket
 
+code = 0
+
 class color:
 	""" Define plain colors """
 	GRAY     = '\033[30m'
@@ -372,8 +374,7 @@ def generator():
 
 """ Sous-Program """
 def subprogram():
-	code = 0
-	
+	global code
 	if(code == 1):
 		print("\n[INFO] - Launching subprogram\n")
 		IP = raw_input("> IP: ")
@@ -411,39 +412,25 @@ def subprogram():
 """ Mode d'éxecution du program """
 def program():
 	pic()
-	b = 1
-	
-	while(b == 1):
+	while(1):
 		process = int(input("Choisir le processus {\n\t|1. " + color.B_GREEN + "normal" + color.END + " \n\t|2. " + color.B_YELLOW + "make_tree" + color.END + " \n\t|3. " + color.B_YELLOW + "scan_tree" + color.END + " \n\t|4. " + color.B_YELLOW + "connect_backdoor" + color.END + " \n\t|5. " + color.B_YELLOW + "generator" + color.END + " \n\t|0. " + color.B_RED + "exit" + color.END + "\n}:\n" + color.B_YELLOW + ">>> " + color.END))
 		
-		""" Lancement normal """
-		if(process == 1): normal()
-		
-		""" Lancement générateur d'arborescence """
-		if(process == 2): make_tree()
-		
-		""" Lancement du scan """
-		if(process == 3): scan_tree()
-		
-		""" Connexion au backdoor """
-		if(process == 4): connect_backdoor()
-		
-		""" Génération d'un backdoor """
-		if(process == 5):
+		if(process == 1): normal() # Lancement normal
+		if(process == 2): make_tree() # Lancement générateur d'arborescence
+		if(process == 3): scan_tree() # Lancement du scan
+		if(process == 4): connect_backdoor() # Connexion au backdoor
+		if(process == 5): # Génération d'un backdoor
 			generator()
 			compilation = os.system('setup.py py2exe')
 			if(compilation == 0): print("\n[" + color.B_RED + "ERREUR" + color.END + "] - " + color.RED + "Echec de la Compilation" + color.END)
 			else: print("\n[" + color.B_BLUE + "INFO" + color.END + "] - " + color.GREEN + "Compilation Terminer" + color.END)
 		
-		""" Pour quitter """
-		if(process == 0):
+		if(process == 0): # Pour quitter
 			print(color.RED + "Qitting...\n" + color.END)
-			b = 0
+			exit(1)
 		
 		if(process == 6): subprogram()
 		if(process > 6): print("\n[" + color.RED + "ERROR" + color.END + "] - Process not installed\n")
-	
-	exit(1)
 
 """ Lancement """
 program()

