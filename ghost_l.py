@@ -11,6 +11,8 @@ from os.path import *
 from socket import *
 import os, sys, socket
 
+code = 0
+
 """ Image du program """
 def pic():
 	print("\n")
